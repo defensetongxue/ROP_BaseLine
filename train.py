@@ -40,9 +40,11 @@ last_epoch = args.configs['train']['begin_epoch']
 
 # Load the datasets
 train_dataset=CustomDataset(
-    split='train',data_path=args.data_path,split_name=args.split_name)
-val_dataset=CustomDataset(split='val',data_path=args.data_path,split_name=args.split_name)
-test_dataset=CustomDataset(split='test',data_path=args.data_path,split_name=args.split_name)
+    split='train',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.norm_method)
+val_dataset=CustomDataset(
+    split='val',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.norm_method)
+test_dataset=CustomDataset(
+    split='test',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.norm_method)
 # Create the data loaders
     
 train_loader = DataLoader(train_dataset, 
@@ -64,7 +66,6 @@ else:
     
 # init metic
 metirc= Metrics(val_dataset,"Main")
-metirc_aux=Metrics(val_dataset,"Aux")
 print("There is {} batch size".format(args.configs["train"]['batch_size']))
 print(f"Train: {len(train_loader)}, Val: {len(val_loader)}")
 
@@ -78,13 +79,12 @@ save_model_name=args.split_name+args.configs['save_name']
 for epoch in range(last_epoch,total_epoches):
 
     train_loss = train_epoch(model, optimizer, train_loader, criterion, device,lr_scheduler,epoch)
-    val_loss,  metirc,metirc_aux= val_epoch(model, val_loader, criterion, device,metirc,metirc_aux)
+    val_loss,  metirc= val_epoch(model, val_loader, criterion, device,metirc)
     print(f"Epoch {epoch + 1}/{total_epoches}, "
       f"Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}, "
       f"Lr: {optimizer.state_dict()['param_groups'][0]['lr']:.6f}"
       )
     print(metirc)
-    print(metirc_aux)
     # Early stopping
     if metirc.average_recall >best_avgrecall:
         best_avgrecall= metirc.average_recall
@@ -101,10 +101,8 @@ for epoch in range(last_epoch,total_epoches):
 
 # Load the best model and evaluate
 metirc=Metrics(test_dataset,"Main")
-metirc_aux=Metrics(test_dataset,"Aux")
 model.load_state_dict(
         torch.load(os.path.join(args.save_dir, save_model_name)))
-val_loss, metirc,metirc_aux=val_epoch(model, test_loader, criterion, device,metirc,metirc_aux)
+val_loss, metirc=val_epoch(model, test_loader, criterion, device,metirc)
 print(f"Best Epoch ")
 print(metirc)
-print(metirc_aux)

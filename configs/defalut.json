@@ -1,9 +1,11 @@
 {
     "num_works": 12,
-    "num_classes":4,
-    "smoothing":0.1,
-    "save_name":"nlp.pth",
-    "pretrained_path":"./RETFound_cfp_weights.pth",
+    "save_name":"vit.pth",
+    "model":{
+        "name":"vit",
+        "num_classes":4,
+        "global_pool":true
+    },
     "lr_strategy":{
         "warmup_epochs":10,
         "lr":5e-4,
