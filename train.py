@@ -57,7 +57,7 @@ test_loader=  DataLoader(test_dataset,
                         batch_size=args.configs['train']['batch_size'],
                         shuffle=False, num_workers=args.configs['num_works'])
 
-if args.configs["smoothing"]> 0.:
+if args.smoothing> 0.:
     from timm.loss import LabelSmoothingCrossEntropy
     credits=LabelSmoothingCrossEntropy(args.configs["smoothing"])
 else:
