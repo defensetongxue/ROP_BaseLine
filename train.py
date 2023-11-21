@@ -65,7 +65,11 @@ if args.smoothing> 0.:
 else:
     from models.losses import AdaptiveCrossEntropyLoss
     criterion = AdaptiveCrossEntropyLoss(train_dataset+val_dataset,device)
+if args.configs['model']['name']=='inceptionv3':
+    from models import incetionV3_loss
+    assert args.resize>=299, "for the model inceptionv3, you should set resolusion at least 299 but now "
     
+    criterion= incetionV3_loss(args.smoothing)
 # init metic
 metirc= Metrics(val_dataset,"Main")
 print("There is {} batch size".format(args.configs["train"]['batch_size']))
@@ -77,6 +81,7 @@ best_auc=0
 best_avgrecall=0
 total_epoches=args.configs['train']['end_epoch']
 save_model_name=args.split_name+args.configs['save_name']
+saved_epoch=-1
 # Training and validation loop
 for epoch in range(last_epoch,total_epoches):
 
@@ -92,6 +97,7 @@ for epoch in range(last_epoch,total_epoches):
     #     best_avgrecall= metirc.average_recall
     if metirc.auc >best_auc:
         best_auc= metirc.auc
+        saved_epoch=epoch
         early_stop_counter = 0
         torch.save(model.state_dict(),
                    os.path.join(args.save_dir,save_model_name))
@@ -110,3 +116,14 @@ model.load_state_dict(
 val_loss, metirc=val_epoch(model, test_loader, criterion, device,metirc)
 print(f"Best Epoch ")
 print(metirc)
+param={
+    "model":args.configs["model"]["name"],
+    "split_name":args.split_name,
+    "resolution": args.resize,
+    "norm_method":args.norm_method,
+    "smoothing":args.smoothing,
+    "optimizer":args.configs["lr_strategy"],
+    "weight_decay":args.configs["train"]["wd"],
+    "save_epoch":saved_epoch
+}
+metirc._store(param)

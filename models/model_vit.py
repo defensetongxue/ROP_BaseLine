@@ -78,5 +78,4 @@ def build_vit(global_pool=True,num_classes=4,pretrained='./',drop_path=0.2):
 
     # manually initialize fc layer
     trunc_normal_(model.head.weight, std=2e-5)
-
     return model

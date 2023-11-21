@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.metrics import accuracy_score, roc_auc_score
 from collections import Counter
+import json,os
 def calculate_recall(labels, preds, class_id=None):
     """
     Calculate recall for a specified class or for the positive label in a multi-class task.
@@ -73,3 +74,30 @@ class Metrics:
                 f"Recall1: {self.recall_1:.4f}, Recall2: {self.recall_2:.4f}, "
                 f"Recall3: {self.recall_3:.4f}, RecallAvg: {self.average_recall:.4f}, RecallPos: {self.recall_pos:.4f} ")
     
+    def _store(self, param, save_path='./record.json'):
+        data  = {
+            "result": {
+                "accuracy": round(self.accuracy, 4),
+                "auc": round(self.auc, 4),
+                "recall_1": round(self.recall_1, 4),
+                "recall_2": round(self.recall_2, 4),
+                "recall_3": round(self.recall_3, 4),
+                "recall_pos": round(self.recall_pos, 4),
+                "average_recall": round(self.average_recall, 4)
+            },
+            "param": param
+        }
+
+        # Check if the file exists and load its content if it does
+        if os.path.exists(save_path):
+            with open(save_path, 'r') as file:
+                existing_data = json.load(file)
+        else:
+            existing_data = []
+
+        # Append the new data
+        existing_data.append(data)
+
+        # Save the updated data back to the file
+        with open(save_path, 'w') as file:
+            json.dump(existing_data, file, indent=4)

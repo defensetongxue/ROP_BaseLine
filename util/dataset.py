@@ -1,7 +1,6 @@
 
 import os
 from torchvision import  transforms
-from timm.data.constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from torch.utils.data import Dataset
 from torchvision.transforms import functional as F
 from PIL import Image

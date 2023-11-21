@@ -1,0 +1,110 @@
+[
+    {
+        "result": {
+            "accuracy": 0.8803,
+            "auc": 0.9027,
+            "recall_1": 0.6,
+            "recall_2": 0.1447,
+            "recall_3": 0.1852,
+            "recall_pos": 0.653,
+            "average_recall": 0.4627
+        },
+        "param": {
+            "model": "resnet50",
+            "split_name": "2",
+            "resolution": 256,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 21
+        }
+    },
+    {
+        "result": {
+            "accuracy": 0.8964,
+            "auc": 0.9106,
+            "recall_1": 0.6912,
+            "recall_2": 0.3684,
+            "recall_3": 0.0741,
+            "recall_pos": 0.7542,
+            "average_recall": 0.5518
+        },
+        "param": {
+            "model": "resnet18",
+            "split_name": "2",
+            "resolution": 256,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 47
+        }
+    },
+    {
+        "result": {
+            "accuracy": 0.8964,
+            "auc": 0.9008,
+            "recall_1": 0.6526,
+            "recall_2": 0.4342,
+            "recall_3": 0.1667,
+            "recall_pos": 0.706,
+            "average_recall": 0.5494
+        },
+        "param": {
+            "model": "inceptionv3",
+            "split_name": "2",
+            "resolution": 299,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 35
+        }
+    },
+    {
+        "result": {
+            "accuracy": 0.8614,
+            "auc": 0.9271,
+            "recall_1": 0.7825,
+            "recall_2": 0.2368,
+            "recall_3": 0.1296,
+            "recall_pos": 0.8337,
+            "average_recall": 0.5976
+        },
+        "param": {
+            "model": "efficientnet_b7",
+            "split_name": "2",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 15
+        }
+    }
+]
