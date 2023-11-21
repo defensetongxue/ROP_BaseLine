@@ -4,7 +4,7 @@ import numpy as np
 from .metric import Metrics
 from torch import nn
 from collections import Counter
-
+from .layer_decay import param_groups_lrd
 
 def to_device(x, device):
     if isinstance(x, tuple):
@@ -65,7 +65,6 @@ def val_epoch(model, val_loader, loss_function, device,metirc:Metrics):
     all_predictions = np.array(all_predictions)
     all_targets = np.array(all_targets)
     all_probs = np.vstack(all_probs)
-    all_probs_aux = np.array(all_probs_aux)
     # print(all_predictions.shape,all_probs.shape,)
     metirc.update(all_predictions,all_probs,all_targets)
     return running_loss / len(val_loader), metirc
@@ -76,6 +75,9 @@ def get_instance(module, class_name, *args, **kwargs):
 
 def get_optimizer(cfg, model):
     optimizer = None
+    if cfg['model']['name']=='vit':
+            return get_optimizer_vit(cfg,model) # layer decay is needed
+    
     if cfg['train']['optimizer'] == 'sgd':
         optimizer = optim.SGD(
             filter(lambda p: p.requires_grad, model.parameters()),
@@ -85,9 +87,9 @@ def get_optimizer(cfg, model):
             nesterov=cfg['train']['nesterov']
         )
     elif cfg['train']['optimizer'] == 'adam':
-        optimizer = optim.Adam(
+        optimizer = optim.AdamW(
             filter(lambda p: p.requires_grad, model.parameters()),
-            lr=cfg['train']['lr']
+            lr=cfg['train']['lr'],weight_decay=cfg['train']['wd']
         )
     elif cfg['train']['optimizer'] == 'rmsprop':
         optimizer = optim.RMSprop(
@@ -105,7 +107,7 @@ def get_optimizer(cfg, model):
 class lr_sche():
     def __init__(self,config):
         self.warmup_epochs=config["warmup_epochs"]
-        self.lr=config["lr"]
+        self.lr=config["blr"]*config["batch_size"]/256
         self.min_lr=config["min_lr"]
         self.epochs=config['epochs']
     def adjust_learning_rate(self,optimizer, epoch):
@@ -122,3 +124,10 @@ class lr_sche():
                 param_group["lr"] = lr
         return lr
     
+def get_optimizer_vit(cfg,model):
+    param_groups = param_groups_lrd(model, cfg['train']['wd'],
+        no_weight_decay_list=model.no_weight_decay(),
+        layer_decay=cfg["train"]["layer_decay"]
+    )
+    optimizer = torch.optim.AdamW(param_groups, lr=cfg["train"]["lr"])
+    return optimizer

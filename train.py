@@ -19,7 +19,6 @@ os.makedirs(args.save_dir,exist_ok=True)
 print("Saveing the model in {}".format(args.save_dir))
 # Create the model and criterion
 model= build_model(args.configs["model"])# as we are loading the exite
-model.load_pretrained(pretrained_path=args.configs["pretrained_path"])
 
 
 # Set up the device
@@ -40,11 +39,13 @@ last_epoch = args.configs['train']['begin_epoch']
 
 # Load the datasets
 train_dataset=CustomDataset(
-    split='train',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.norm_method)
+    split='train',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.configs["norm_method"],enhanced=args.enhanced)
 val_dataset=CustomDataset(
-    split='val',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.norm_method)
+    split='val',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.configs["norm_method"],
+    enhanced=args.enhanced)
 test_dataset=CustomDataset(
-    split='test',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.norm_method)
+    split='test',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.configs["norm_method"],
+    enhanced=args.enhanced)
 # Create the data loaders
     
 train_loader = DataLoader(train_dataset, 
@@ -59,10 +60,11 @@ test_loader=  DataLoader(test_dataset,
 
 if args.smoothing> 0.:
     from timm.loss import LabelSmoothingCrossEntropy
-    credits=LabelSmoothingCrossEntropy(args.configs["smoothing"])
+    criterion =LabelSmoothingCrossEntropy(args.smoothing)
+    print("Using tmii official optimizier")
 else:
     from models.losses import AdaptiveCrossEntropyLoss
-    criterion = AdaptiveCrossEntropyLoss(train_dataset+val_dataset,device,aux_r=args.aux_r*args.word_size)
+    criterion = AdaptiveCrossEntropyLoss(train_dataset+val_dataset,device)
     
 # init metic
 metirc= Metrics(val_dataset,"Main")
@@ -86,8 +88,10 @@ for epoch in range(last_epoch,total_epoches):
       )
     print(metirc)
     # Early stopping
-    if metirc.average_recall >best_avgrecall:
-        best_avgrecall= metirc.average_recall
+    # if metirc.average_recall >best_avgrecall:
+    #     best_avgrecall= metirc.average_recall
+    if metirc.auc >best_auc:
+        best_auc= metirc.auc
         early_stop_counter = 0
         torch.save(model.state_dict(),
                    os.path.join(args.save_dir,save_model_name))

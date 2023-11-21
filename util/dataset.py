@@ -11,7 +11,7 @@ import torch
 IMAGENET_DEFAULT_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_DEFAULT_STD = (0.229, 0.224, 0.225)
 class CustomDataset(Dataset):
-    def __init__(self, split,data_path,split_name,resize=224,norm_method='custom'):
+    def __init__(self, split,data_path,split_name,resize=224,norm_method='custom',enhanced=False):
         '''
         as the retfound model is pretrained in the image_net norm(mean,std),
         we keep the mean and std for this method, but for the other model, 
@@ -31,6 +31,7 @@ class CustomDataset(Dataset):
             # we only rotate the 90 180 270 degree for augument
             Fix_RandomRotation(),
         ])
+        self.img_enhanced=enhanced
         self.split = split
         if norm_method=='imagenet':
             self.img_transforms=transforms.Compose([
@@ -38,16 +39,22 @@ class CustomDataset(Dataset):
             transforms.Normalize(
                 mean=IMAGENET_DEFAULT_MEAN,
                 std=IMAGENET_DEFAULT_STD)])
-        else:
+        elif norm_method=='custom':
             self.img_transforms=transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize(
                 mean=[0.4623, 0.3856, 0.2822],
                 std=[0.2527, 0.1889, 0.1334])])
+        else:
+            raise 
     def __getitem__(self, idx):
         image_name = self.split_list[idx]
         data=self.data_dict[image_name]
-        img=Image.open(data['image_path']).convert("RGB").resize((800,600))
+        if self.img_enhanced:
+            img=Image.open(data['enhanced_path']).convert("RGB")
+        else:
+            img=Image.open(data['image_path']).convert("RGB")
+        img=self.preprocess(img)
         if self.split=='train':
             img=self.enhance_transforms(img)
             

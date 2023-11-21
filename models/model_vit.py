@@ -47,11 +47,14 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
             outcome = x[:, 0]
 
         return outcome
+    def forward(self, x):
+        x = self.forward_features(x)
+        x = self.head(x)
+        return x
 
-
-def build_vit(global_pool=True,num_class=4):
-    checkpoint = torch.load('./RETFound_cfp_weights.pth', map_location='cpu')
-    model = VisionTransformer(global_pool=global_pool,num_class=num_class,
+def build_vit(global_pool=True,num_classes=4,pretrained='./',drop_path=0.2):
+    checkpoint = torch.load(pretrained, map_location='cpu')
+    model = VisionTransformer(global_pool=global_pool,num_classes=num_classes,drop_path_rate=drop_path,
         patch_size=16, embed_dim=1024, depth=24, num_heads=16, mlp_ratio=4, qkv_bias=True,
         norm_layer=partial(nn.LayerNorm, eps=1e-6))
     checkpoint_model = checkpoint['model']
@@ -66,7 +69,7 @@ def build_vit(global_pool=True,num_class=4):
 
     # load pre-trained model
     msg = model.load_state_dict(checkpoint_model, strict=False)
-    print(msg)
+    # print(msg)
 
     if global_pool:
         assert set(msg.missing_keys) == {'head.weight', 'head.bias', 'fc_norm.weight', 'fc_norm.bias'}

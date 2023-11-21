@@ -8,11 +8,13 @@ def get_config():
     # split
     parser.add_argument('--split_name', type=str, default='2',
                         help='which split to use.')
+    parser.add_argument('--enhanced', type=bool, default=False,
+                        help='which split to use.')
     parser.add_argument('--resize', type=int, default=224,
                         help='which split to use.')
     parser.add_argument('--norm_method', type=str, default="imagenet",
                         help='which split to use.')
-    parser.add_argument('--smoothing', type=float, default=0.0,
+    parser.add_argument('--smoothing', type=float, default=0.1,
                         help='which split to use.')
     # Model
     # train and test

@@ -1,26 +1,30 @@
 {
     "num_works": 12,
     "save_name":"vit.pth",
+    "norm_method":"imagenet",
     "model":{
         "name":"vit",
         "num_classes":4,
-        "global_pool":true
+        "drop_path":0.2,
+        "global_pool":true,
+        "pretrained":"../ROP_diagnoise/pretrained/RETFound_cfp_weights.pth"
     },
     "lr_strategy":{
         "warmup_epochs":10,
-        "lr":5e-4,
+        "blr":5e-3,
         "min_lr":1e-6,
-        "epochs":100
+        "epochs":50,
+        "batch_size":16
     },
     "train": {
-        "batch_size":64,
+        "batch_size":16,
         "begin_epoch": 0,
-        "end_epoch": 100,
+        "end_epoch": 50,
         "early_stop": 30,
         "optimizer": "adam",
         "lr": 0.0001,
-        "wd": 5e-4,
-        "momentum": 0.0,
-        "nesterov": false
+        "wd": 5e-2,
+        "layer_decay":0.65
+
     }
 }

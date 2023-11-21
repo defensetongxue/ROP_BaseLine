@@ -49,9 +49,9 @@ def build_efficientnet_b7(config):
     model.classifier[1]=nn.Linear(in_features=2560, out_features=config['num_classes'], bias=True)
     print(f"efficentnet b7 has {count_parameters(model)}")
     return model
-def build_model_vit(config):
+def build_vit(config):
     from .model_vit import build_vit
-    model=build_vit(config["global_pool"],config['num_classes'])
+    model=build_vit(config["global_pool"],config['num_classes'],config["pretrained"],config["drop_path"])
     return model
 if __name__ =='__main__':
     cfg={

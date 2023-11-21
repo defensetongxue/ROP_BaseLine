@@ -65,7 +65,7 @@ class AdaptiveCrossEntropyLoss(nn.Module):
         # Count the number of occurrences for each class
         label_counter = Counter()
         for _, label,_ in dataset:
-            label_counter[label[0]] += 1
+            label_counter[label] += 1
         print(label_counter)
         # Calculate weights for classes 1, 2, and 3
         # Set weights for class 0 and 1 to 1.0
@@ -84,9 +84,4 @@ class AdaptiveCrossEntropyLoss(nn.Module):
         return torch.tensor(class_weights, dtype=torch.float32)
 
     def forward(self, input, target):
-        class_tar,patch_tar=target
-        class_pred,patch_pred=input
-        bc,word_size,num_classes=patch_pred.shape
-        patch_tar=patch_tar.reshape(-1)
-        patch_pred=patch_pred.reshape(-1,num_classes)
-        return self.cross_entropy_loss(class_pred,class_tar)+self.cross_entropy_loss(patch_pred,patch_tar)*5
+        return self.cross_entropy_loss(input,target)
