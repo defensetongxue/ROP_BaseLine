@@ -89,7 +89,7 @@ for epoch in range(last_epoch,total_epoches):
     val_loss,  metirc= val_epoch(model, val_loader, criterion, device,metirc)
     print(f"Epoch {epoch + 1}/{total_epoches}, "
       f"Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}, "
-      f"Lr: {optimizer.state_dict()['param_groups'][0]['lr']:.6f}"
+    #   f"Lr: {optimizer.state_dict()['param_groups'][0]['lr']:.6f}"
       )
     print(metirc)
     # Early stopping
