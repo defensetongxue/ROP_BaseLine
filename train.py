@@ -118,7 +118,6 @@ print(f"Best Epoch ")
 print(metirc)
 param={
     "model":args.configs["model"]["name"],
-    "split_name":args.split_name,
     "resolution": args.resize,
     "norm_method":args.norm_method,
     "smoothing":args.smoothing,
@@ -126,4 +125,5 @@ param={
     "weight_decay":args.configs["train"]["wd"],
     "save_epoch":saved_epoch
 }
-metirc._store(param)
+key=f"{args.configs['model']['name']}_{str(args.resize)}_{args.norm_method}_{str(args.smoothing)}_{str(args.configs['lr_strategy']['blr'])}_{str(args.configs['train']['wd'])}"
+metirc._store(key,args.split_name,saved_epoch,param)

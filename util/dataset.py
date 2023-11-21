@@ -21,6 +21,7 @@ class CustomDataset(Dataset):
         with open(os.path.join(data_path,'annotations.json'),'r') as f:
             self.data_dict=json.load(f)
         self.preprocess=transforms.Compose([
+            CropPadding(),
             transforms.Resize((resize,resize))
         ])
         self.enhance_transforms = transforms.Compose([
@@ -99,3 +100,10 @@ class Fix_RandomRotation(object):
             format_string += ', center={0}'.format(self.center)
         format_string += ')'
         return format_string
+    
+class CropPadding:
+    def __init__(self, box=(80, 0, 1570, 1200)):
+        self.box = box
+
+    def __call__(self, img):
+        return img.crop(self.box)
