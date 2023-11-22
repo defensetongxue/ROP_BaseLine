@@ -17,3 +17,22 @@ python train.py --cfg ./configs/inceptionv3.json --split_name 1 --resize 299
 python train.py --cfg ./configs/inceptionv3.json --split_name 2 --resize 299
 python train.py --cfg ./configs/inceptionv3.json --split_name 3 --resize 299
 python train.py --cfg ./configs/inceptionv3.json --split_name 4 --resize 299
+
+
+python train.py --cfg ./configs/resnet50.json --split_name 1 
+python train.py --cfg ./configs/resnet50.json --split_name 2 
+python train.py --cfg ./configs/resnet50.json --split_name 3 
+python train.py --cfg ./configs/resnet50.json --split_name 4 
+
+python train.py --cfg ./configs/vgg16.json --split_name 1 
+python train.py --cfg ./configs/vgg16.json --split_name 2 
+python train.py --cfg ./configs/vgg16.json --split_name 3 
+python train.py --cfg ./configs/vgg16.json --split_name 4 
+
+python train.py --cfg ./configs/mobelnetv3_large.json --split_name 1 
+python train.py --cfg ./configs/mobelnetv3_large.json --split_name 2 
+python train.py --cfg ./configs/mobelnetv3_large.json --split_name 3 
+python train.py --cfg ./configs/mobelnetv3_large.json --split_name 4 
+
+python ring.py
+shutdown
