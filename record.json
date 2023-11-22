@@ -1,5 +1,241 @@
 {
-    "vit_224_imagenet_0.1_0.005_0.05": {
+    "inceptionv3_299_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "inceptionv3",
+            "resolution": 299,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 23
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.9133,
+                "auc": 0.9126,
+                "recall_1": 0.6877,
+                "recall_2": 0.3514,
+                "recall_3": 0.5333,
+                "recall_pos": 0.8275,
+                "average_recall": 0.6082,
+                "save_epoch": 23
+            },
+            "2": {
+                "accuracy": 0.8964,
+                "auc": 0.9247,
+                "recall_1": 0.6877,
+                "recall_2": 0.3026,
+                "recall_3": 0.037,
+                "recall_pos": 0.7229,
+                "average_recall": 0.5325,
+                "save_epoch": 27
+            },
+            "3": {
+                "accuracy": 0.9108,
+                "auc": 0.9155,
+                "recall_1": 0.6935,
+                "recall_2": 0.4565,
+                "recall_3": 0.1212,
+                "recall_pos": 0.8563,
+                "average_recall": 0.6024,
+                "save_epoch": 14
+            },
+            "4": {
+                "accuracy": 0.9197,
+                "auc": 0.9265,
+                "recall_1": 0.7524,
+                "recall_2": 0.2759,
+                "recall_3": 0.2286,
+                "recall_pos": 0.8283,
+                "average_recall": 0.5723,
+                "save_epoch": 35
+            }
+        }
+    },
+    "mobelnetv3Small_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "mobelnetv3_small",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 17
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.8734,
+                "auc": 0.8362,
+                "recall_1": 0.5613,
+                "recall_2": 0.1081,
+                "recall_3": 0.0667,
+                "recall_pos": 0.6316,
+                "average_recall": 0.4415,
+                "save_epoch": 17
+            },
+            "2": {
+                "accuracy": 0.8352,
+                "auc": 0.8521,
+                "recall_1": 0.3895,
+                "recall_2": 0.3947,
+                "recall_3": 0.1296,
+                "recall_pos": 0.5759,
+                "average_recall": 0.3566,
+                "save_epoch": 10
+            },
+            "3": {
+                "accuracy": 0.8758,
+                "auc": 0.852,
+                "recall_1": 0.5605,
+                "recall_2": 0.087,
+                "recall_3": 0.0606,
+                "recall_pos": 0.6483,
+                "average_recall": 0.4434,
+                "save_epoch": 44
+            },
+            "4": {
+                "accuracy": 0.8552,
+                "auc": 0.8511,
+                "recall_1": 0.481,
+                "recall_2": 0.1034,
+                "recall_3": 0.2857,
+                "recall_pos": 0.6235,
+                "average_recall": 0.3614,
+                "save_epoch": 20
+            }
+        }
+    },
+    "mobelnetv3Large_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "mobelnetv3_large",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 16
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.887,
+                "auc": 0.9116,
+                "recall_1": 0.4862,
+                "recall_2": 0.3243,
+                "recall_3": 0.1333,
+                "recall_pos": 0.6959,
+                "average_recall": 0.4357,
+                "save_epoch": 16
+            },
+            "2": {
+                "accuracy": 0.8605,
+                "auc": 0.9098,
+                "recall_1": 0.4175,
+                "recall_2": 0.3684,
+                "recall_3": 0.1296,
+                "recall_pos": 0.5518,
+                "average_recall": 0.3711,
+                "save_epoch": 6
+            },
+            "3": {
+                "accuracy": 0.8785,
+                "auc": 0.9069,
+                "recall_1": 0.4718,
+                "recall_2": 0.1522,
+                "recall_3": 0.1818,
+                "recall_pos": 0.6911,
+                "average_recall": 0.3976,
+                "save_epoch": 4
+            },
+            "4": {
+                "accuracy": 0.9035,
+                "auc": 0.9494,
+                "recall_1": 0.6095,
+                "recall_2": 0.5402,
+                "recall_3": 0.3714,
+                "recall_pos": 0.8283,
+                "average_recall": 0.5663,
+                "save_epoch": 9
+            }
+        }
+    },
+    "vitToken_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "vit",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 8
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.8515,
+                "auc": 0.9344,
+                "recall_1": 0.664,
+                "recall_2": 0.6351,
+                "recall_3": 0.0,
+                "recall_pos": 0.8801,
+                "average_recall": 0.6287,
+                "save_epoch": 8
+            },
+            "2": {
+                "accuracy": 0.8356,
+                "auc": 0.8772,
+                "recall_1": 0.6526,
+                "recall_2": 0.0526,
+                "recall_3": 0.0,
+                "recall_pos": 0.6771,
+                "average_recall": 0.4578,
+                "save_epoch": 5
+            },
+            "3": {
+                "accuracy": 0.89,
+                "auc": 0.9296,
+                "recall_1": 0.7137,
+                "recall_2": 0.1087,
+                "recall_3": 0.0,
+                "recall_pos": 0.7768,
+                "average_recall": 0.5566,
+                "save_epoch": 8
+            },
+            "4": {
+                "accuracy": 0.8804,
+                "auc": 0.9366,
+                "recall_1": 0.5238,
+                "recall_2": 0.0,
+                "recall_3": 0.1429,
+                "recall_pos": 0.6325,
+                "average_recall": 0.3464,
+                "save_epoch": 9
+            }
+        }
+    },
+    "vitPool_224_imagenet_0.1_0.005_0.05": {
         "param": {
             "model": "vit",
             "resolution": 224,
@@ -25,6 +261,213 @@
                 "recall_pos": 0.6337,
                 "average_recall": 0.4458,
                 "save_epoch": 15
+            },
+            "1": {
+                "accuracy": 0.8389,
+                "auc": 0.9039,
+                "recall_1": 0.5889,
+                "recall_2": 0.2027,
+                "recall_3": 0.1333,
+                "recall_pos": 0.8333,
+                "average_recall": 0.4854,
+                "save_epoch": 8
+            },
+            "3": {
+                "accuracy": 0.8905,
+                "auc": 0.9238,
+                "recall_1": 0.6613,
+                "recall_2": 0.0217,
+                "recall_3": 0.1212,
+                "recall_pos": 0.7554,
+                "average_recall": 0.5168,
+                "save_epoch": 8
+            },
+            "4": {
+                "accuracy": 0.8897,
+                "auc": 0.93,
+                "recall_1": 0.4571,
+                "recall_2": 0.4253,
+                "recall_3": 0.3429,
+                "recall_pos": 0.6566,
+                "average_recall": 0.4367,
+                "save_epoch": 15
+            }
+        }
+    },
+    "resnet50_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "resnet50",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 25
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.8944,
+                "auc": 0.8782,
+                "recall_1": 0.4664,
+                "recall_2": 0.4459,
+                "recall_3": 0.1333,
+                "recall_pos": 0.7047,
+                "average_recall": 0.4474,
+                "save_epoch": 25
+            },
+            "2": {
+                "accuracy": 0.8771,
+                "auc": 0.8848,
+                "recall_1": 0.5895,
+                "recall_2": 0.1579,
+                "recall_3": 0.0556,
+                "recall_pos": 0.6554,
+                "average_recall": 0.441,
+                "save_epoch": 38
+            },
+            "3": {
+                "accuracy": 0.913,
+                "auc": 0.9369,
+                "recall_1": 0.8065,
+                "recall_2": 0.0,
+                "recall_3": 0.0303,
+                "recall_pos": 0.8593,
+                "average_recall": 0.6147,
+                "save_epoch": 11
+            },
+            "4": {
+                "accuracy": 0.9045,
+                "auc": 0.938,
+                "recall_1": 0.6857,
+                "recall_2": 0.1264,
+                "recall_3": 0.3714,
+                "recall_pos": 0.7801,
+                "average_recall": 0.506,
+                "save_epoch": 27
+            }
+        }
+    },
+    "resnet18_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "resnet18",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 19
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.8939,
+                "auc": 0.9281,
+                "recall_1": 0.6206,
+                "recall_2": 0.2432,
+                "recall_3": 0.2667,
+                "recall_pos": 0.7515,
+                "average_recall": 0.5234,
+                "save_epoch": 19
+            },
+            "2": {
+                "accuracy": 0.8637,
+                "auc": 0.8935,
+                "recall_1": 0.4386,
+                "recall_2": 0.1184,
+                "recall_3": 0.0556,
+                "recall_pos": 0.5036,
+                "average_recall": 0.3301,
+                "save_epoch": 18
+            },
+            "3": {
+                "accuracy": 0.9037,
+                "auc": 0.9352,
+                "recall_1": 0.746,
+                "recall_2": 0.1739,
+                "recall_3": 0.0606,
+                "recall_pos": 0.8104,
+                "average_recall": 0.5963,
+                "save_epoch": 18
+            },
+            "4": {
+                "accuracy": 0.904,
+                "auc": 0.9467,
+                "recall_1": 0.6048,
+                "recall_2": 0.1379,
+                "recall_3": 0.3429,
+                "recall_pos": 0.7199,
+                "average_recall": 0.4548,
+                "save_epoch": 17
+            }
+        }
+    },
+    "efficientnetB7_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "efficientnet_b7",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 17
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.9099,
+                "auc": 0.9471,
+                "recall_1": 0.6996,
+                "recall_2": 0.2162,
+                "recall_3": 0.0667,
+                "recall_pos": 0.8216,
+                "average_recall": 0.5673,
+                "save_epoch": 17
+            },
+            "2": {
+                "accuracy": 0.8936,
+                "auc": 0.9142,
+                "recall_1": 0.6386,
+                "recall_2": 0.3158,
+                "recall_3": 0.1481,
+                "recall_pos": 0.7398,
+                "average_recall": 0.5157,
+                "save_epoch": 18
+            },
+            "3": {
+                "accuracy": 0.9146,
+                "auc": 0.9437,
+                "recall_1": 0.8911,
+                "recall_2": 0.0,
+                "recall_3": 0.0,
+                "recall_pos": 0.9144,
+                "average_recall": 0.6758,
+                "save_epoch": 6
+            },
+            "4": {
+                "accuracy": 0.8946,
+                "auc": 0.9455,
+                "recall_1": 0.5762,
+                "recall_2": 0.1609,
+                "recall_3": 0.2857,
+                "recall_pos": 0.6717,
+                "average_recall": 0.4367,
+                "save_epoch": 17
             }
         }
     }

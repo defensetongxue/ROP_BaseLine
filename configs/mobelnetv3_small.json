@@ -1,7 +1,7 @@
 {
     "num_works": 12,
     "save_name":"mobelnetv3_small.pth",
-    "norm_method":"imagenet",
+    "norm_method":"custom",
     "model":{
         "name":"mobelnetv3_small",
         "official_model_save":"./experiments",

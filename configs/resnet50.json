@@ -1,7 +1,7 @@
 {
     "num_works": 12,
     "save_name":"resnt50.pth",
-    "norm_method":"imagenet",
+    "norm_method":"custom",
     "model":{
         "name":"resnet50",
         "official_model_save":"./experiments",
