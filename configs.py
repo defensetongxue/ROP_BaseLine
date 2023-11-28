@@ -8,7 +8,7 @@ def get_config():
     # split
     parser.add_argument('--split_name', type=str, default='2',
                         help='which split to use.')
-    parser.add_argument('--enhanced', type=bool, default=False,
+    parser.add_argument('--enhanced', type=bool, default=True,
                         help='which split to use.')
     parser.add_argument('--resize', type=int, default=224,
                         help='which split to use.')

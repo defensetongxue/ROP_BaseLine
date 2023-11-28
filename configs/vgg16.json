@@ -1,7 +1,7 @@
 {
     "num_works": 12,
     "save_name":"vgg16.pth",
-    "norm_method":"custom",
+    "norm_method":"imagenet",
     "model":{
         "name":"vgg16",
         "official_model_save":"./experiments",

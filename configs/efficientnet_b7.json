@@ -1,7 +1,7 @@
 {
     "num_works": 12,
     "save_name":"efficientnet_b7.pth",
-    "norm_method":"custom",
+    "norm_method":"imagenet",
     "model":{
         "name":"efficientnet_b7",
         "official_model_save":"./experiments",

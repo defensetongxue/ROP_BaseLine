@@ -1,0 +1,70 @@
+{
+    "inceptionv3_512_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "inceptionv3",
+            "resolution": 512,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 40
+        },
+        "result": {
+            "2": {
+                "accuracy": 0.9015,
+                "auc": 0.9203,
+                "recall_1": 0.6715,
+                "recall_2": 0.3947,
+                "recall_3": 0.1667,
+                "recall_pos": 0.7351,
+                "average_recall": 0.552,
+                "save_epoch": 40
+            },
+            "1": {
+                "accuracy": 0.9114,
+                "auc": 0.8921,
+                "recall_1": 0.7042,
+                "recall_2": 0.3514,
+                "recall_3": 0.0,
+                "recall_pos": 0.8146,
+                "average_recall": 0.5927,
+                "save_epoch": 14
+            }
+        }
+    },
+    "inceptionv3_299_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "inceptionv3",
+            "resolution": 299,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 33
+        },
+        "result": {
+            "2": {
+                "accuracy": 0.8941,
+                "auc": 0.9087,
+                "recall_1": 0.7007,
+                "recall_2": 0.25,
+                "recall_3": 0.0926,
+                "recall_pos": 0.745,
+                "average_recall": 0.5347,
+                "save_epoch": 33
+            }
+        }
+    }
+}

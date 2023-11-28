@@ -1,0 +1,415 @@
+{
+    "efficientnet_b7_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "efficientnet_b7",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 3
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.9099,
+                "auc": 0.9455,
+                "recall_1": 0.525,
+                "recall_2": 0.4189,
+                "recall_3": 0.0,
+                "recall_pos": 0.7751,
+                "average_recall": 0.4772,
+                "save_epoch": 3
+            },
+            "2": {
+                "accuracy": 0.8849,
+                "auc": 0.9035,
+                "recall_1": 0.5949,
+                "recall_2": 0.4079,
+                "recall_3": 0.0741,
+                "recall_pos": 0.6832,
+                "average_recall": 0.4901,
+                "save_epoch": 15
+            },
+            "3": {
+                "accuracy": 0.9108,
+                "auc": 0.9438,
+                "recall_1": 0.7197,
+                "recall_2": 0.1304,
+                "recall_3": 0.1515,
+                "recall_pos": 0.805,
+                "average_recall": 0.5755,
+                "save_epoch": 15
+            },
+            "4": {
+                "accuracy": 0.9133,
+                "auc": 0.9559,
+                "recall_1": 0.7295,
+                "recall_2": 0.3218,
+                "recall_3": 0.2,
+                "recall_pos": 0.8328,
+                "average_recall": 0.5653,
+                "save_epoch": 20
+            }
+        }
+    },
+    "resnet18_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "resnet18",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 19
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.8924,
+                "auc": 0.9345,
+                "recall_1": 0.7542,
+                "recall_2": 0.2703,
+                "recall_3": 0.2,
+                "recall_pos": 0.845,
+                "average_recall": 0.6201,
+                "save_epoch": 19
+            },
+            "2": {
+                "accuracy": 0.861,
+                "auc": 0.9141,
+                "recall_1": 0.3978,
+                "recall_2": 0.5263,
+                "recall_3": 0.0185,
+                "recall_pos": 0.6015,
+                "average_recall": 0.3713,
+                "save_epoch": 5
+            },
+            "3": {
+                "accuracy": 0.9048,
+                "auc": 0.9142,
+                "recall_1": 0.5774,
+                "recall_2": 0.1739,
+                "recall_3": 0.1212,
+                "recall_pos": 0.6667,
+                "average_recall": 0.4717,
+                "save_epoch": 24
+            },
+            "4": {
+                "accuracy": 0.9035,
+                "auc": 0.9217,
+                "recall_1": 0.5314,
+                "recall_2": 0.2989,
+                "recall_3": 0.4,
+                "recall_pos": 0.6869,
+                "average_recall": 0.4559,
+                "save_epoch": 17
+            }
+        }
+    },
+    "mobelnetv3_small_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "mobelnetv3_small",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 16
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.8715,
+                "auc": 0.8715,
+                "recall_1": 0.6333,
+                "recall_2": 0.2162,
+                "recall_3": 0.0667,
+                "recall_pos": 0.7477,
+                "average_recall": 0.5137,
+                "save_epoch": 16
+            },
+            "2": {
+                "accuracy": 0.843,
+                "auc": 0.8381,
+                "recall_1": 0.4197,
+                "recall_2": 0.3289,
+                "recall_3": 0.1111,
+                "recall_pos": 0.552,
+                "average_recall": 0.3614,
+                "save_epoch": 17
+            },
+            "3": {
+                "accuracy": 0.8467,
+                "auc": 0.8671,
+                "recall_1": 0.6904,
+                "recall_2": 0.1087,
+                "recall_3": 0.0,
+                "recall_pos": 0.8176,
+                "average_recall": 0.5346,
+                "save_epoch": 7
+            },
+            "4": {
+                "accuracy": 0.8794,
+                "auc": 0.8629,
+                "recall_1": 0.43,
+                "recall_2": 0.1034,
+                "recall_3": 0.3143,
+                "recall_pos": 0.5775,
+                "average_recall": 0.3313,
+                "save_epoch": 15
+            }
+        }
+    },
+    "inceptionv3_299_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "inceptionv3",
+            "resolution": 299,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 14
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.9192,
+                "auc": 0.9585,
+                "recall_1": 0.6167,
+                "recall_2": 0.473,
+                "recall_3": 0.1333,
+                "recall_pos": 0.769,
+                "average_recall": 0.5623,
+                "save_epoch": 14
+            },
+            "2": {
+                "accuracy": 0.8978,
+                "auc": 0.9238,
+                "recall_1": 0.6241,
+                "recall_2": 0.4342,
+                "recall_3": 0.2778,
+                "recall_pos": 0.6906,
+                "average_recall": 0.5421,
+                "save_epoch": 32
+            },
+            "3": {
+                "accuracy": 0.9135,
+                "auc": 0.9291,
+                "recall_1": 0.6946,
+                "recall_2": 0.413,
+                "recall_3": 0.0,
+                "recall_pos": 0.8836,
+                "average_recall": 0.5818,
+                "save_epoch": 8
+            },
+            "4": {
+                "accuracy": 0.906,
+                "auc": 0.9456,
+                "recall_1": 0.686,
+                "recall_2": 0.1264,
+                "recall_3": 0.4,
+                "recall_pos": 0.7842,
+                "average_recall": 0.5076,
+                "save_epoch": 11
+            }
+        }
+    },
+    "resnet50_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "resnet50",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 30
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.8914,
+                "auc": 0.9283,
+                "recall_1": 0.5083,
+                "recall_2": 0.2432,
+                "recall_3": 0.1333,
+                "recall_pos": 0.7082,
+                "average_recall": 0.4316,
+                "save_epoch": 30
+            },
+            "2": {
+                "accuracy": 0.8794,
+                "auc": 0.9227,
+                "recall_1": 0.4416,
+                "recall_2": 0.3553,
+                "recall_3": 0.2963,
+                "recall_pos": 0.5272,
+                "average_recall": 0.4059,
+                "save_epoch": 18
+            },
+            "3": {
+                "accuracy": 0.9239,
+                "auc": 0.9393,
+                "recall_1": 0.8033,
+                "recall_2": 0.1087,
+                "recall_3": 0.1515,
+                "recall_pos": 0.8396,
+                "average_recall": 0.6352,
+                "save_epoch": 15
+            },
+            "4": {
+                "accuracy": 0.8789,
+                "auc": 0.9403,
+                "recall_1": 0.6039,
+                "recall_2": 0.4598,
+                "recall_3": 0.4857,
+                "recall_pos": 0.8146,
+                "average_recall": 0.5532,
+                "save_epoch": 12
+            }
+        }
+    },
+    "vgg16_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "vgg16",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 27
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.9133,
+                "auc": 0.9439,
+                "recall_1": 0.7375,
+                "recall_2": 0.527,
+                "recall_3": 0.6,
+                "recall_pos": 0.8997,
+                "average_recall": 0.6839,
+                "save_epoch": 27
+            },
+            "2": {
+                "accuracy": 0.8955,
+                "auc": 0.9304,
+                "recall_1": 0.6314,
+                "recall_2": 0.5526,
+                "recall_3": 0.1481,
+                "recall_pos": 0.7698,
+                "average_recall": 0.552,
+                "save_epoch": 33
+            },
+            "3": {
+                "accuracy": 0.902,
+                "auc": 0.9516,
+                "recall_1": 0.59,
+                "recall_2": 0.5,
+                "recall_3": 0.1515,
+                "recall_pos": 0.7987,
+                "average_recall": 0.5314,
+                "save_epoch": 23
+            },
+            "4": {
+                "accuracy": 0.9045,
+                "auc": 0.9423,
+                "recall_1": 0.57,
+                "recall_2": 0.4368,
+                "recall_3": 0.0,
+                "recall_pos": 0.7082,
+                "average_recall": 0.4742,
+                "save_epoch": 21
+            }
+        }
+    },
+    "mobelnetv3_large_224_imagenet_0.1_0.005_0.05": {
+        "param": {
+            "model": "mobelnetv3_large",
+            "resolution": 224,
+            "norm_method": "imagenet",
+            "smoothing": 0.1,
+            "optimizer": {
+                "warmup_epochs": 10,
+                "blr": 0.005,
+                "min_lr": 1e-06,
+                "epochs": 50,
+                "batch_size": 16
+            },
+            "weight_decay": 0.05,
+            "save_epoch": 24
+        },
+        "result": {
+            "1": {
+                "accuracy": 0.907,
+                "auc": 0.9078,
+                "recall_1": 0.7167,
+                "recall_2": 0.2027,
+                "recall_3": 0.0667,
+                "recall_pos": 0.845,
+                "average_recall": 0.5714,
+                "save_epoch": 24
+            },
+            "2": {
+                "accuracy": 0.8481,
+                "auc": 0.9125,
+                "recall_1": 0.4015,
+                "recall_2": 0.5263,
+                "recall_3": 0.3148,
+                "recall_pos": 0.703,
+                "average_recall": 0.4134,
+                "save_epoch": 6
+            },
+            "3": {
+                "accuracy": 0.9157,
+                "auc": 0.9092,
+                "recall_1": 0.6695,
+                "recall_2": 0.1087,
+                "recall_3": 0.1212,
+                "recall_pos": 0.7358,
+                "average_recall": 0.5314,
+                "save_epoch": 12
+            },
+            "4": {
+                "accuracy": 0.8932,
+                "auc": 0.8956,
+                "recall_1": 0.4251,
+                "recall_2": 0.2299,
+                "recall_3": 0.2857,
+                "recall_pos": 0.6049,
+                "average_recall": 0.3587,
+                "save_epoch": 15
+            }
+        }
+    }
+}
