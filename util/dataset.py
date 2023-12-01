@@ -10,18 +10,22 @@ import torch
 IMAGENET_DEFAULT_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_DEFAULT_STD = (0.229, 0.224, 0.225)
 class CustomDataset(Dataset):
-    def __init__(self, split,data_path,split_name,resize=224,norm_method='custom',enhanced=False):
+    def __init__(self, split,data_path,split_name,resize=224,norm_method='custom',enhanced=False,ridge_only=True):
         '''
         as the retfound model is pretrained in the image_net norm(mean,std),
         we keep the mean and std for this method, but for the other model, 
         we use the std,mean cal by 20 images of custom dataset
         '''
-        with open(os.path.join(data_path,'split',f'{split_name}.json'), 'r') as f:
-            self.split_list=json.load(f)[split]
+        if ridge_only:
+            with open(os.path.join(data_path,'split',f'ri_{split_name}.json'), 'r') as f:
+                self.split_list=json.load(f)[split]
+        else:
+            with open(os.path.join(data_path,'split',f'{split_name}.json'), 'r') as f:
+                self.split_list=json.load(f)[split]
         with open(os.path.join(data_path,'annotations.json'),'r') as f:
             self.data_dict=json.load(f)
         self.preprocess=transforms.Compose([
-            CropPadding(),
+            # CropPadding(),
             transforms.Resize((resize,resize))
         ])
         self.enhance_transforms = transforms.Compose([

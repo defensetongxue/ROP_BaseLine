@@ -64,6 +64,16 @@
                 "recall_pos": 0.745,
                 "average_recall": 0.5347,
                 "save_epoch": 33
+            },
+            "1": {
+                "accuracy": 0.8787,
+                "auc": 0.9473,
+                "recall_1": 0.6107,
+                "recall_2": 0.1951,
+                "recall_3": 0.2093,
+                "recall_pos": 0.6408,
+                "average_recall": 0.4985,
+                "save_epoch": -1
             }
         }
     }

@@ -108,12 +108,49 @@ for epoch in range(last_epoch,total_epoches):
             print("Early stopping triggered")
             break
 
-
+from torch import  nn
+from  util.functions import to_device
 # Load the best model and evaluate
 metirc=Metrics(test_dataset,"Main")
 model.load_state_dict(
         torch.load(os.path.join(args.save_dir, save_model_name)))
-val_loss, metirc=val_epoch(model, test_loader, criterion, device,metirc)
+with open(os.path.join(args.data_path,'annotations.json'),'r') as f:
+    data_dict=json.load(f)
+loss_function=nn.CrossEntropyLoss()
+model.eval()
+running_loss = 0.0
+all_predictions = []
+all_targets = []
+all_probs = []
+with torch.no_grad():
+    for inputs, targets, _ in val_loader:
+        inputs = to_device(inputs,device)
+        targets = to_device(targets,device)
+        outputs = model(inputs)
+        loss = loss_function(outputs, targets)
+        running_loss += loss.item()
+        probs = torch.softmax(outputs.cpu(), dim=1).numpy()
+        predictions = np.argmax(probs, axis=1)
+       
+        all_predictions.extend(predictions)
+        all_targets.extend(targets.cpu().numpy())
+        all_probs.extend(probs)
+        
+with open(os.path.join(args.data_path,'split',f'ri_{args.split_name}.json'), 'r') as f:
+    split_list=json.load(f)['test_norm']
+print(len(split_list))
+all_predictions.extend(np.zeros((len(split_list))))
+all_targets.extend(np.array([data_dict[image_name]['stage'] for image_name in split_list]))
+norm_prob=np.zeros((len(split_list),4))
+norm_prob[:,0]=1
+all_probs.extend(norm_prob)
+
+all_predictions = np.array(all_predictions)
+all_targets = np.array(all_targets)
+all_probs = np.vstack(all_probs)
+
+# print(all_predictions.shape,all_probs.shape,)
+metirc.update(all_predictions,all_probs,all_targets)
 print(f"Best Epoch ")
 print(metirc)
 param={
