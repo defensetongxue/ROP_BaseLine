@@ -51,7 +51,7 @@ class CustomDataset(Dataset):
         image_name = self.split_list[idx]
         data=self.data_dict[image_name]
         if self.img_enhanced:
-            img=Image.open(data['ridge_enhanced_path']).convert("RGB")
+            img=Image.open(data['enhanced_path']).convert("RGB")
         else:
             img=Image.open(data['image_path']).convert("RGB")
         img=self.preprocess(img)

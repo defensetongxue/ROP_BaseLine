@@ -125,5 +125,5 @@ param={
     "weight_decay":args.configs["train"]["wd"],
     "save_epoch":saved_epoch
 }
-key=f"{args.configs['model']['name']}_{str(args.resize)}_{args.norm_method}_{str(args.smoothing)}_{str(args.configs['lr_strategy']['blr'])}_{str(args.configs['train']['wd'])}"
+key=f"{args.configs['model']['name']}_{str(args.resize)}_{args.norm_method}_{str(args.smoothing)}_{str(args.configs['lr_strategy']['lr'])}_{str(args.configs['train']['wd'])}"
 metirc._store(key,args.split_name,saved_epoch,param)
