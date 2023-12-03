@@ -64,6 +64,26 @@
                 "recall_pos": 0.745,
                 "average_recall": 0.5347,
                 "save_epoch": 33
+            },
+            "1": {
+                "accuracy": 0.9143,
+                "auc": 0.9037,
+                "recall_1": 0.7722,
+                "recall_2": 0.274,
+                "recall_3": 0.0,
+                "recall_pos": 0.8462,
+                "average_recall": 0.6246,
+                "save_epoch": 12
+            },
+            "clr_1": {
+                "accuracy": 0.9076,
+                "auc": 0.9124,
+                "recall_1": 0,
+                "recall_2": 0,
+                "recall_3": 0,
+                "recall_pos": 0.9415,
+                "average_recall": 0,
+                "save_epoch": 9
             }
         }
     }

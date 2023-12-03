@@ -21,7 +21,7 @@ class CustomDataset(Dataset):
         with open(os.path.join(data_path,'annotations.json'),'r') as f:
             self.data_dict=json.load(f)
         self.preprocess=transforms.Compose([
-            CropPadding(),
+            # CropPadding(),
             transforms.Resize((resize,resize))
         ])
         self.enhance_transforms = transforms.Compose([
@@ -51,7 +51,7 @@ class CustomDataset(Dataset):
         image_name = self.split_list[idx]
         data=self.data_dict[image_name]
         if self.img_enhanced:
-            img=Image.open(data['enhanced_path']).convert("RGB")
+            img=Image.open(data['ridge_enhanced_path']).convert("RGB")
         else:
             img=Image.open(data['image_path']).convert("RGB")
         img=self.preprocess(img)
@@ -59,7 +59,9 @@ class CustomDataset(Dataset):
             img=self.enhance_transforms(img)
             
         img=self.img_transforms(img)
-        return img,data['stage'],image_name
+        ridge_label = 1 if data['stage']>0 else 0
+        return img,ridge_label,image_name
+        return img,data['stage']>0,image_name
 
 
     def __len__(self):
