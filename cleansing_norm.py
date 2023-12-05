@@ -12,7 +12,10 @@ if __name__ =='__main__':
     new={'train':[],'val':[],'test':[]}
     for split in split_list:
         for image_name in split_list[split]:
-            if data_dict[image_name]['suspicious']:
+            if not data_dict[image_name]['suspicious']:
+                new[split].append(image_name)
+                assert data_dict[image_name]['stage']==0
+            elif data_dict[image_name]['stage']>0:
                 new[split].append(image_name)
     with open(os.path.join(data_path,'split',f'clr_{split_name}.json'),'w') as f:
         json.dump(new,f)
