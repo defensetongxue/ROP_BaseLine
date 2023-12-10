@@ -104,7 +104,7 @@ for epoch in range(last_epoch,total_epoches):
         print("[Save Model In Epoch {}] Model saved as {}".format(str(epoch),os.path.join(args.save_dir,save_model_name)))
     else:
         early_stop_counter += 1
-        if early_stop_counter >= args.configs['train']['early_stop']:
+        if early_stop_counter > args.configs['train']['early_stop']:
             print("Early stopping triggered")
             break
 
