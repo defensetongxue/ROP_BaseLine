@@ -25,7 +25,7 @@ def get_config():
     
     # config file 
     parser.add_argument('--cfg', help='experiment configuration filename',
-                        default="./configs/defalut.json", type=str)
+                        default="./configs/default.json", type=str)
     
     args = parser.parse_args()
     # Merge args and config file 
