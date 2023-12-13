@@ -9,7 +9,7 @@
     },
     "lr_strategy":{
         "warmup_epochs":10,
-        "lr":5e-4,
+        "lr":1e-4,
         "min_lr":1e-6,
         "epochs":100,
         "batch_size":16
