@@ -60,6 +60,7 @@ class CustomDataset(Dataset):
             
         img=self.img_transforms(img)
         ridge_label = 1 if data['stage']>0 else 0
+        ridge_label = data["stage"]
         return img,ridge_label,image_name
         return img,data['stage']>0,image_name
 
