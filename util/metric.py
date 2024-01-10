@@ -84,7 +84,7 @@ class Metrics:
                 "recall_pos": round(self.recall_pos, 4),
                 "average_recall": round(self.average_recall, 4),
                 "save_epoch":save_epoch
-            },
+            }
         
 
         # Check if the file exists and load its content if it does
@@ -97,9 +97,10 @@ class Metrics:
         # Append the new data
         if key not in existing_data:
             existing_data[key]={
-                "param":param
+                "param":param,
+                "result":{}
             }
-        existing_data[key][split_name]=res
+        existing_data[key]["result"][split_name]=res
 
         # Save the updated data back to the file
         with open(save_path, 'w') as file:
