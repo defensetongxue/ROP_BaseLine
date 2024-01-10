@@ -104,7 +104,7 @@ for epoch in range(last_epoch,total_epoches):
         print("[Save Model In Epoch {}] Model saved as {}".format(str(epoch),os.path.join(args.save_dir,save_model_name)))
     else:
         early_stop_counter += 1
-        if early_stop_counter >= args.configs['train']['early_stop']:
+        if early_stop_counter > args.configs['train']['early_stop']:
             print("Early stopping triggered")
             break
 
@@ -125,5 +125,5 @@ param={
     "weight_decay":args.configs["train"]["wd"],
     "save_epoch":saved_epoch
 }
-key=f"{args.configs['model']['name']}_{str(args.resize)}_{args.norm_method}_{str(args.smoothing)}_{str(args.configs['lr_strategy']['blr'])}_{str(args.configs['train']['wd'])}"
+key=f"{args.configs['model']['name']}_{str(args.resize)}_{args.norm_method}_{str(args.smoothing)}_{str(args.configs['lr_strategy']['lr'])}_{str(args.configs['train']['wd'])}"
 metirc._store(key,args.split_name,saved_epoch,param)

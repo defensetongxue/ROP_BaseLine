@@ -60,13 +60,14 @@ class Metrics:
 
     def update(self, predictions, probs, targets):
         self.accuracy = accuracy_score(targets, predictions)
-        self.auc = roc_auc_score(targets, probs, multi_class='ovr')
-        self.recall_1 = calculate_recall(targets, predictions, class_id=1)
-        self.recall_2 = calculate_recall(targets, predictions, class_id=2)
-        self.recall_3 = calculate_recall(targets, predictions, class_id=3)
+        self.auc= roc_auc_score(targets,predictions)
+        # self.auc = roc_auc_score(targets, probs, multi_class='ovr')
+        # self.recall_1 = calculate_recall(targets, predictions, class_id=1)
+        # self.recall_2 = calculate_recall(targets, predictions, class_id=2)
+        # self.recall_3 = calculate_recall(targets, predictions, class_id=3)
         self.recall_pos=calculate_recall(targets,predictions)
-        # Compute weighted average recall
-        self.average_recall = sum(self.class_weights[i] * recall for i, recall in zip([1, 2, 3], [self.recall_1, self.recall_2, self.recall_3]))
+        # # Compute weighted average recall
+        # self.average_recall = sum(self.class_weights[i] * recall for i, recall in zip([1, 2, 3], [self.recall_1, self.recall_2, self.recall_3]))
 
     def __str__(self):
         return (f"[{self.header}] "

@@ -1,0 +1,22 @@
+{
+    "efficientnet": {
+        "accuracy": 0.9493,
+        "auc": 0.926,
+        "recall": 0.8829
+    },
+    "mobelnetv3": {
+        "accuracy": 0.8958,
+        "auc": 0.8668,
+        "recall": 0.8146
+    },
+    "inceptionv3": {
+        "accuracy": 0.9518,
+        "auc": 0.9372,
+        "recall": 0.91
+    },
+    "resnet50": {
+        "accuracy": 0.93,
+        "auc": 0.9138,
+        "recall": 0.8855
+    }
+}

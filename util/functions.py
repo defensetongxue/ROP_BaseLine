@@ -107,7 +107,7 @@ def get_optimizer(cfg, model):
 class lr_sche():
     def __init__(self,config):
         self.warmup_epochs=config["warmup_epochs"]
-        self.lr=config["blr"]*config["batch_size"]/256
+        self.lr=config["lr"]
         self.min_lr=config["min_lr"]
         self.epochs=config['epochs']
     def adjust_learning_rate(self,optimizer, epoch):
