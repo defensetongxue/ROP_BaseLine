@@ -14,7 +14,7 @@ torch.manual_seed(0)
 np.random.seed(0)
 # Parse arguments
 args = get_config()
-
+args.configs['model']['num_classes']=2
 os.makedirs(args.save_dir,exist_ok=True)
 print("Saveing the model in {}".format(args.save_dir))
 # Create the model and criterion
@@ -39,13 +39,13 @@ last_epoch = args.configs['train']['begin_epoch']
 
 # Load the datasets
 train_dataset=CustomDataset(
-    split='train',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.configs["norm_method"],enhanced=args.enhanced)
+    split='train',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.configs["norm_method"],enhanced=args.enhanced,bin=True)
 val_dataset=CustomDataset(
     split='val',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.configs["norm_method"],
-    enhanced=args.enhanced)
+    enhanced=args.enhanced,bin=True)
 test_dataset=CustomDataset(
     split='test',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.configs["norm_method"],
-    enhanced=args.enhanced)
+    enhanced=args.enhanced,bin=True)
 # Create the data loaders
     
 train_loader = DataLoader(train_dataset, 
