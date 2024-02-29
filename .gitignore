@@ -2,5 +2,6 @@ __pycache__
 *.pth
 nohup.out
 experiments
+checkpoints
 ring.py
 tmp.py

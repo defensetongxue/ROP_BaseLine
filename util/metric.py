@@ -28,10 +28,11 @@ def calculate_recall(labels, preds, class_id=None):
     return recall
 
 class Metrics:
-    def __init__(self, dataset,header="Main" ):
+    def __init__(self, dataset,header="Main",num_class=2 ):
         self.class_weights = self.calculate_class_weights(dataset)
         print(self.class_weights)
         self.reset()
+        self.num_class=num_class
         self.header=header
     def reset(self):
         self.accuracy = 0
@@ -60,8 +61,10 @@ class Metrics:
 
     def update(self, predictions, probs, targets):
         self.accuracy = accuracy_score(targets, predictions)
-        # self.auc= roc_auc_score(targets,predictions)
-        self.auc = roc_auc_score(targets, probs, multi_class='ovr')
+        if self.num_class==2:
+            self.auc= roc_auc_score(targets,predictions)
+        else:
+            self.auc = roc_auc_score(targets, probs, multi_class='ovr')
         self.recall_1 = calculate_recall(targets, predictions, class_id=1)
         self.recall_2 = calculate_recall(targets, predictions, class_id=2)
         self.recall_3 = calculate_recall(targets, predictions, class_id=3)
@@ -75,16 +78,15 @@ class Metrics:
                 f"Recall1: {self.recall_1:.4f}, Recall2: {self.recall_2:.4f}, "
                 f"Recall3: {self.recall_3:.4f}, RecallAvg: {self.average_recall:.4f}, RecallPos: {self.recall_pos:.4f} ")
     
-    def _store(self,key, split_name,save_epoch,param, save_path='./record.json'):
+    def _store(self,key, split_name,param, save_path='./record.json'):
         res  =  {
-                "accuracy": round(self.accuracy, 4),
-                "auc": round(self.auc, 4),
+                "Accuracy": round(self.accuracy, 4),
+                "AUC": round(self.auc, 4),
                 "recall_1": round(self.recall_1, 4),
                 "recall_2": round(self.recall_2, 4),
                 "recall_3": round(self.recall_3, 4),
-                "recall_pos": round(self.recall_pos, 4),
-                "average_recall": round(self.average_recall, 4),
-                "save_epoch":save_epoch
+                "Recall": round(self.recall_pos, 4),
+                "average_recall": round(self.average_recall, 4)
             }
         
 

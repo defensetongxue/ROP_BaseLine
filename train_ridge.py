@@ -71,7 +71,7 @@ if args.configs['model']['name']=='inceptionv3':
     
     criterion= incetionV3_loss(args.smoothing)
 # init metic
-metirc= Metrics(val_dataset,"Main")
+metirc= Metrics(val_dataset,"Main",num_class=2)
 print("There is {} batch size".format(args.configs["train"]['batch_size']))
 print(f"Train: {len(train_loader)}, Val: {len(val_loader)}")
 
@@ -110,7 +110,7 @@ for epoch in range(last_epoch,total_epoches):
 
 
 # Load the best model and evaluate
-metirc=Metrics(test_dataset,"Main")
+metirc=Metrics(test_dataset,"Main",num_class=2)
 model.load_state_dict(
         torch.load(os.path.join(args.save_dir, save_model_name)))
 val_loss, metirc=val_epoch(model, test_loader, criterion, device,metirc)
@@ -126,4 +126,4 @@ param={
     "save_epoch":saved_epoch
 }
 key=f"{args.configs['model']['name']}_{str(args.resize)}_{args.norm_method}_{str(args.smoothing)}_{str(args.configs['lr_strategy']['lr'])}_{str(args.configs['train']['wd'])}"
-metirc._store(key,args.split_name,saved_epoch,param)
+metirc._store(key,args.split_name,param,save_path='./experiments/fs_ridge.json')

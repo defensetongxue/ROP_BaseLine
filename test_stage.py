@@ -126,4 +126,4 @@ param={
     "save_epoch":saved_epoch
 }
 key=f"{args.configs['model']['name']}_{str(args.resize)}_{args.norm_method}_{str(args.smoothing)}_{str(args.configs['lr_strategy']['lr'])}_{str(args.configs['train']['wd'])}"
-metirc._store(key,args.split_name,param,save_path='./experiments/fs_stage.json')
+metirc._store(key,args.split_name,saved_epoch,param,save_path='./experiments/shenzhen_stage.json')
