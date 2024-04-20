@@ -25,11 +25,11 @@ model= build_model(args.configs["model"])# as we are loading the exite
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = model.to(device)
 print(f"using {device} for training")
-save_model_name=args.split_name+args.configs['save_name']
+save_model_name='all'+args.configs['save_name']
 model.eval()
 # Creatr optimizer
 test_dataset=CustomDataset(
-    split='test',data_path=args.data_path,split_name='all',resize=args.resize,norm_method=args.configs["norm_method"],
+    split='test',data_path=args.data_path,split_name='clr',resize=args.resize,norm_method=args.configs["norm_method"],
     enhanced=args.enhanced,bin=True)
 # Create the data loaders
     
@@ -39,7 +39,7 @@ test_loader=  DataLoader(test_dataset,
 
 
 # Load the best model and evaluate
-metirc=Metrics(test_dataset,"Main",num_class=2)
+metirc=Metrics("Main",num_class=2)
 model.load_state_dict(
         torch.load(os.path.join(args.save_dir, save_model_name)))
 model.eval()

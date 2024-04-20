@@ -21,12 +21,6 @@ class CustomDataset(Dataset):
         with open(os.path.join(data_path,'annotations.json'),'r') as f:
             self.data_dict=json.load(f)
         
-        if not bin:
-            new_split=[]
-            for image_name in self.split_list:
-                if self.data_dict[image_name]['stage']>0:
-                    new_split.append(image_name)
-            self.split_list=new_split
         self.preprocess=transforms.Compose([
             # CropPadding(),
             transforms.Resize((resize,resize))
@@ -70,7 +64,7 @@ class CustomDataset(Dataset):
         if self.bin:
             ridge_label = 1 if data['stage']>0 else 0
         else:
-            ridge_label = data["stage"]-1
+            ridge_label = data["stage"]
         return img,ridge_label,image_name
 
 

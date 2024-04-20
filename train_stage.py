@@ -14,7 +14,7 @@ torch.manual_seed(0)
 np.random.seed(0)
 # Parse arguments
 args = get_config()
-args.configs['model']['num_classes']=3
+args.configs['model']['num_classes']=4
 # select the lr and wd for hyper parameter adjustment
 args.configs["lr_strategy"]["lr"]=args.lr
 args.configs['train']['lr']=args.lr
@@ -75,7 +75,7 @@ if args.configs['model']['name']=='inceptionv3':
     
     criterion= incetionV3_loss(args.smoothing)
 # init metic
-metirc= Metrics(val_dataset,"Main")
+metirc= Metrics("Main",num_class=4)
 print("There is {} batch size".format(args.configs["train"]['batch_size']))
 print(f"Train: {len(train_loader)}, Val: {len(val_loader)}")
 
@@ -88,7 +88,7 @@ save_model_name=args.split_name+args.configs['save_name']
 saved_epoch=-1
 # Training and validation loop
 for epoch in range(last_epoch,total_epoches):
-
+    break
     train_loss = train_epoch(model, optimizer, train_loader, criterion, device,lr_scheduler,epoch)
     val_loss,  metirc= val_epoch(model, val_loader, criterion, device,metirc)
     print(f"Epoch {epoch + 1}/{total_epoches}, "
@@ -114,7 +114,7 @@ for epoch in range(last_epoch,total_epoches):
 
 
 # Load the best model and evaluate
-metirc=Metrics(test_dataset,"Main")
+metirc=Metrics("Main",4)
 model.load_state_dict(
         torch.load(os.path.join(args.save_dir, save_model_name)))
 val_loss, metirc=val_epoch(model, test_loader, criterion, device,metirc)

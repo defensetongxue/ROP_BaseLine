@@ -28,9 +28,7 @@ def calculate_recall(labels, preds, class_id=None):
     return recall
 
 class Metrics:
-    def __init__(self, dataset,header="Main",num_class=2 ):
-        self.class_weights = self.calculate_class_weights(dataset)
-        print(self.class_weights)
+    def __init__(self, header="Main",num_class=2 ):
         self.reset()
         self.num_class=num_class
         self.header=header
@@ -41,23 +39,6 @@ class Metrics:
         self.recall_2 = 0
         self.recall_3 = 0
         self.recall_pos=0
-        self.average_recall = 0
-    def calculate_class_weights(self, dataset):
-        # Calculate the distribution of classes 1, 2, and 3 in the dataset
-        class_counter = Counter()
-        for _, label,_ in dataset:
-            if label in [1, 2, 3]:
-                class_counter[label] += 1
-
-        # Calculate the weights for each class
-        total_count = sum(class_counter.values())
-        class_weights = {i: (class_counter[i]/total_count ) if class_counter[i] > 0 else 0 for i in [1, 2, 3]}
-
-        # Normalize weights
-        # min_weight = min(filter(lambda x: x > 0, class_weights.values()), default=1)
-        # class_weights = {i: weight / min_weight for i, weight in class_weights.items()}
-
-        return class_weights
 
     def update(self, predictions, probs, targets):
         self.accuracy = accuracy_score(targets, predictions)
@@ -65,30 +46,28 @@ class Metrics:
             self.auc= roc_auc_score(targets,predictions)
         else:
             self.auc = roc_auc_score(targets, probs, multi_class='ovr')
+        self.recall_0 = calculate_recall(targets, predictions, class_id=0)
         self.recall_1 = calculate_recall(targets, predictions, class_id=1)
         self.recall_2 = calculate_recall(targets, predictions, class_id=2)
         self.recall_3 = calculate_recall(targets, predictions, class_id=3)
         self.recall_pos=calculate_recall(targets,predictions)
-        # # Compute weighted average recall
-        # self.average_recall = sum(self.class_weights[i] * recall for i, recall in zip([1, 2, 3], [self.recall_1, self.recall_2, self.recall_3]))
 
     def __str__(self):
         return (f"[{self.header}] "
                 f"Acc: {self.accuracy:.4f}, Auc: {self.auc:.4f}, "
                 f"Recall1: {self.recall_1:.4f}, Recall2: {self.recall_2:.4f}, "
-                f"Recall3: {self.recall_3:.4f}, RecallAvg: {self.average_recall:.4f}, RecallPos: {self.recall_pos:.4f} ")
+                f"Recall3: {self.recall_3:.4f}, RecallPos: {self.recall_pos:.4f} ")
     
     def _store(self,key, split_name,param, save_path='./record.json'):
-        res  =  {
-                "Accuracy": round(self.accuracy, 4),
-                "AUC": round(self.auc, 4),
-                "recall_1": round(self.recall_1, 4),
-                "recall_2": round(self.recall_2, 4),
-                "recall_3": round(self.recall_3, 4),
-                "Recall": round(self.recall_pos, 4),
-                "average_recall": round(self.average_recall, 4)
-            }
-        
+        res = {
+        "Accuracy": f"{self.accuracy:.4f}",
+        "AUC": f"{self.auc:.4f}",
+        "recall_pos":  f"{self.recall_pos:.4f}",  # Assuming this is a single value, not formatted
+        "0_recall": f"{self.recall_0:.4f}",
+        "1_recall": f"{self.recall_1:.4f}",
+        "2_recall": f"{self.recall_2:.4f}",
+        "3_recall": f"{self.recall_3:.4f}",
+        }
 
         # Check if the file exists and load its content if it does
         if os.path.exists(save_path):
