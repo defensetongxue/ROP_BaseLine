@@ -14,7 +14,7 @@ class incetionV3_loss(nn.Module):
     def forward(self,inputs,target):
         if isinstance(inputs,tuple):
             out,avg=inputs
-            return self.loss_cls(out,target)+self.loss_avg(avg,target)
+            return self.loss_cls(out,target)+self.loss_avg(avg,target)*0.4
         return self.loss_cls(inputs,target)
 def build_model(configs):
     

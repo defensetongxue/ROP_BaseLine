@@ -15,6 +15,10 @@ np.random.seed(0)
 # Parse arguments
 args = get_config()
 args.configs['model']['num_classes']=3
+# select the lr and wd for hyper parameter adjustment
+args.configs["lr_strategy"]["lr"]=args.lr
+args.configs['train']['lr']=args.lr
+args.configs['train']['wd']=args.wd
 os.makedirs(args.save_dir,exist_ok=True)
 print("Saveing the model in {}".format(args.save_dir))
 # Create the model and criterion

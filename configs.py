@@ -16,6 +16,10 @@ def get_config():
                         help='which split to use.')
     parser.add_argument('--smoothing', type=float, default=0.1,
                         help='which split to use.')
+    parser.add_argument('--lr', type=float, default=1e-4,
+                        help='which split to use.')
+    parser.add_argument('--wd', type=float, default=5e-2,
+                        help='which split to use.')
     # Model
     # train and test
     parser.add_argument('--save_dir', type=str, default="./checkpoints",
