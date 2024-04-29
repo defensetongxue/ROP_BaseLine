@@ -39,9 +39,9 @@ last_epoch = args.configs['train']['begin_epoch']
 
 # Load the datasets
 train_dataset=CustomDataset(
-    split='train',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.configs["norm_method"],enhanced=args.enhanced,bin=False)
+    split='train',data_path=args.data_path,split_name='all',resize=args.resize,norm_method=args.configs["norm_method"],enhanced=args.enhanced,bin=False)
 val_dataset=CustomDataset(
-    split='val',data_path=args.data_path,split_name=args.split_name,resize=args.resize,norm_method=args.configs["norm_method"],
+    split='val',data_path=args.data_path,split_name='all',resize=args.resize,norm_method=args.configs["norm_method"],
     enhanced=args.enhanced,bin=False)
 test_dataset=CustomDataset(
     split='test',data_path='../autodl-tmp/ROP_shen',split_name='clr',resize=args.resize,norm_method=args.configs["norm_method"],
