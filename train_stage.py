@@ -88,7 +88,6 @@ save_model_name=args.split_name+args.configs['save_name']
 saved_epoch=-1
 # Training and validation loop
 for epoch in range(last_epoch,total_epoches):
-    break
     train_loss = train_epoch(model, optimizer, train_loader, criterion, device,lr_scheduler,epoch)
     val_loss,  metirc= val_epoch(model, val_loader, criterion, device,metirc)
     print(f"Epoch {epoch + 1}/{total_epoches}, "
