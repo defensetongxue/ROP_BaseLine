@@ -1,50 +1,56 @@
 import json
-import os
 import numpy as np
+import os
 
-# Load data
-with open('./experiments/fs_ridge.json') as f:
+# Load the data
+with open('./experiments/sz_ridge.json') as f:
     records = json.load(f)
 
-best_result = {}
+best_results = {}
 
-# Process each record to find the best result based on AUC
+# Define metrics of interest
+metrics_of_interest = ["AUC", "Accuracy", "recall_pos"]
+
+# Process each record
 for key, value in records.items():
     model_name = value["param"]["model"]
-    results = value["result"]
+    result = value["result"]
     
-    # Calculate mean metrics across splits for each record
-    metrics = {"AUC": [], "Accuracy": [], "recall_pos": []}
-    for split in results.values():
-        for metric in metrics.keys():
-            if metric in split:
-                metrics[metric].append(float(split[metric]))
-    
-    # Calculate mean of each metric
-    mean_metrics = {metric: np.mean(vals) for metric, vals in metrics.items()}
-    
-    if model_name not in best_result or best_result[model_name]["AUC"] < mean_metrics["AUC"]:
-        best_result[model_name] = mean_metrics
+    # Calculate mean and standard deviation across all clrs for each metric
+    aggregated_results = {}
+    for metric in metrics_of_interest:
+        metric_values = [float(result[clr][metric]) for clr in result if metric in result[clr]]
+        if metric_values:  # Ensure there are valid metric entries
+            mean_metric = np.mean(metric_values)
+            std_metric = np.std(metric_values)
+            # Format mean and std to 4 decimal places as strings
+            aggregated_results[metric] = [f"{mean_metric:.4f}", f"{std_metric:.4f}"]
 
-# Calculate mean and standard deviation for each metric for each model
-result_stats = {model: {metric: [np.mean(values), np.std(values)]
-                        for metric, values in res.items()}
-                for model, res in best_result.items()}
+    # Compare and store the best result
+    if model_name not in best_results:
+        best_results[model_name] = aggregated_results
+    else:
+        for metric in metrics_of_interest:
+            if metric in aggregated_results:
+                current_best_mean, current_best_std = [float(x) for x in best_results[model_name].get(metric, ["0", "inf"])]
+                new_mean, new_std = [float(x) for x in aggregated_results[metric]]
+                if (new_mean > current_best_mean) or (new_mean == current_best_mean and new_std < current_best_std):
+                    best_results[model_name][metric] = [f"{new_mean:.4f}", f"{new_std:.4f}"]
 
-# Save to JSON
+# Save the results to JSON
 output_json_path = './experiments/result.json'
 with open(output_json_path, 'w') as f:
-    json.dump(result_stats, f, indent=4)
+    json.dump(best_results, f, indent=4)
 
-# Save to text file
-output_dir = './experiments'
-output_txt_path = os.path.join(output_dir, 'ridge_table.txt')
-with open(output_txt_path, 'w') as f:
-    for model, metrics in result_stats.items():
-        f.write(f"{model}:\n")
-        for metric, values in metrics.items():
-            mean, std = values
-            f.write(f"  {metric}: Mean = {mean:.4f}, Std = {std:.4f}\n")
-    f.write("\n")
+# # Optionally, write to a text file for easy viewing
+# output_dir = './experiments'
+# output_txt_path = os.path.join(output_dir, 'ridge_table.txt')
+# with open(output_txt_path, 'w') as f:
+#     for model, results in best_results.items():
+#         f.write(f"{model}:\n")
+#         for metric, values in results.items():
+#             mean, std = values
+#             f.write(f"  {metric}: Mean = {mean}, Std = {std}\n")
+#         f.write("\n")
 
-print("Analysis completed and results saved.")
+print("JSON and text files have been generated with the best results formatted to four decimal places.")

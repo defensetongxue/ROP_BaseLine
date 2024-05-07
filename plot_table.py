@@ -1,50 +1,41 @@
 import json
-import os
 
 # Load JSON data
-with open('./experiments/fs_ridge.json') as f:
+with open('./experiments/result.json', 'r') as f:
     record = json.load(f)
 
-best_result = {}
-Using_Matric = ["AUC", "Accuracy", "recall_pos"]
+# Path to save the LaTeX table
+save_path = './experiments/sz_ridge_table.txt'
 
-# Process each entry
-for key, entry in record.items():
-    model_name = entry["param"]["model"]
-    results = entry["result"]
+# Start writing the LaTeX table
+table_content = "\\begin{table}[ht]\n"
+table_content += "\\centering\n"
+table_content += "\\caption{Summary of Model Performance. Each value represents the mean performance with its corresponding standard deviation, formatted as mean $\\pm$ std.}\n"
+table_content += "\\label{tab:model_performance}\n"
+table_content += "\\begin{tabular}{lccc}\n"
+table_content += "\\toprule\n"
+table_content += "Model Name & Accuracy & AUC & Recall Positive \\\\\n"
+table_content += "\\midrule\n"
 
-    # Aggregate results by averaging metric values across different clr_* entries
-    aggregated_results = {metric: 0 for metric in Using_Matric}
-    count = 0
-    for result_key, metrics in results.items():
-        count += 1
-        for metric in Using_Matric:
-            aggregated_results[metric] += float(metrics[metric])
+# Iterate over each model and add data to the table
+for model_name, metrics in record.items():
+    # Escape underscores in model names to avoid LaTeX formatting issues
+    safe_model_name = model_name.replace('_', '\\_')
+    # accuracy = f"${metrics['Accuracy'][0]} \\pm {metrics['Accuracy'][1]}$"
+    accuracy = f"${metrics['Accuracy'][0]}$"
+    # auc = f"${metrics['AUC'][0]} \\pm {metrics['AUC'][1]}$"
+    auc = f"${metrics['AUC'][0]}$"
+    # recall_positive = f"${metrics['recall_pos'][0]} \\pm {metrics['recall_pos'][1]}$"
+    recall_positive = f"${metrics['recall_pos'][0]}$"
+    table_content += f"{safe_model_name} & {accuracy} & {auc} & {recall_positive} \\\\\n"
 
-    for metric in aggregated_results:
-        aggregated_results[metric] /= count  # Calculate average
+# Close the table structure
+table_content += "\\bottomrule\n"
+table_content += "\\end{tabular}\n"
+table_content += "\\end{table}\n"
 
-    # Update best result for the model based on AUC
-    if model_name not in best_result or best_result[model_name]["AUC"] < aggregated_results["AUC"]:
-        best_result[model_name] = aggregated_results
+# Save the LaTeX table content to a file
+with open(save_path, 'w') as f:
+    f.write(table_content)
 
-# Generate a LaTeX table
-output_dir = './experiments'
-os.makedirs(output_dir, exist_ok=True)
-output_file = os.path.join(output_dir, 'ridge_table.txt')
-
-# LaTeX table formatting
-header = " & ".join(["Model"] + Using_Matric) + " \\\\ \\hline"
-rows = []
-for model, metrics in best_result.items():
-    row = [model] + [f"{metrics[metric]:.4f}" for metric in Using_Matric]
-    rows.append(" & ".join(row) + " \\\\")
-
-table_content = "\n".join(rows)
-latex_table = f"\\begin{{table}}[h]\n\\centering\n\\begin{{tabular}}{{{'|'.join(['c'] * (len(Using_Matric) + 1))}}}\n\\hline\n{header}\n{table_content}\n\\end{{tabular}}\n\\caption{{Best model results}}\n\\end{{table}}"
-
-# Save to file
-with open(output_file, 'w') as f:
-    f.write(latex_table)
-
-print(f"LaTeX table has been generated and saved to {output_file}.")
+print("LaTeX table saved to", save_path)
