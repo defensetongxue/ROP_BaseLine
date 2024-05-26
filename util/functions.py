@@ -66,7 +66,7 @@ def val_epoch(model, val_loader, loss_function, device,metirc:Metrics):
     all_targets = np.array(all_targets)
     all_probs = np.vstack(all_probs)
     # print(all_predictions.shape,all_probs.shape,)
-    metirc.update(all_predictions,all_probs,all_targets)
+    metirc.update(all_predictions,all_targets)
     return running_loss / len(val_loader), metirc
 def get_instance(module, class_name, *args, **kwargs):
     cls = getattr(module, class_name)

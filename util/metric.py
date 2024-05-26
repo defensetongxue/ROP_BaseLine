@@ -27,65 +27,47 @@ def calculate_recall(labels, preds, class_id=None):
     recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
     return recall
 
+from sklearn.preprocessing import label_binarize
+
 class Metrics:
-    def __init__(self, header="Main",num_class=2 ):
+    def __init__(self, header="Main", num_class=2):
+        self.num_class = num_class
+        self.header = header
         self.reset()
-        self.num_class=num_class
-        self.header=header
+
     def reset(self):
         self.accuracy = 0
         self.auc = 0
-        self.recall_1 = 0
-        self.recall_2 = 0
-        self.recall_3 = 0
-        self.recall_pos=0
 
-    def update(self, predictions, probs, targets):
+    def update(self, predictions, targets):
+        # Update accuracy
         self.accuracy = accuracy_score(targets, predictions)
-        if self.num_class==2:
-            self.auc= roc_auc_score(targets,predictions)
+        
+        # Convert predictions to one-hot format for AUC calculation
+        if self.num_class > 2:
+            targets_one_hot = label_binarize(targets, classes=range(self.num_class))
+            predictions_one_hot = label_binarize(predictions, classes=range(self.num_class))
         else:
-            self.auc = roc_auc_score(targets, probs, multi_class='ovr')
-        self.recall_0 = calculate_recall(targets, predictions, class_id=0)
-        self.recall_1 = calculate_recall(targets, predictions, class_id=1)
-        self.recall_2 = calculate_recall(targets, predictions, class_id=2)
-        self.recall_3 = calculate_recall(targets, predictions, class_id=3)
-        self.recall_pos=calculate_recall(targets,predictions)
+            targets_one_hot = targets
+            predictions_one_hot = predictions  # For binary classification, use the labels directly
+        
+        # Update AUC; handle binary and multiclass scenarios
+        if self.num_class == 2:
+            # Directly compute AUC for binary classification
+            self.auc = roc_auc_score(targets_one_hot, predictions_one_hot)
+        else:
+            # Compute AUC using a one-vs-rest approach for multiclass classification
+            try:
+                self.auc = roc_auc_score(targets_one_hot, predictions_one_hot, multi_class='ovr')
+            except ValueError as e:
+                print(f"Failed to calculate AUC: {e}")
+                self.auc = None
 
     def __str__(self):
-        return (f"[{self.header}] "
-                f"Acc: {self.accuracy:.4f}, Auc: {self.auc:.4f}, "
-                f"Recall1: {self.recall_1:.4f}, Recall2: {self.recall_2:.4f}, "
-                f"Recall3: {self.recall_3:.4f}, RecallPos: {self.recall_pos:.4f} ")
-    
-    def _store(self,key, split_name,param, save_path='./record.json'):
-        res = {
-        "Accuracy": f"{self.accuracy:.4f}",
-        "AUC": f"{self.auc:.4f}",
-        "recall_pos":  f"{self.recall_pos:.4f}",  # Assuming this is a single value, not formatted
-        "0_recall": f"{self.recall_0:.4f}",
-        "1_recall": f"{self.recall_1:.4f}",
-        "2_recall": f"{self.recall_2:.4f}",
-        "3_recall": f"{self.recall_3:.4f}",
-        }
+        return f"[{self.header}] Acc: {self.accuracy:.4f}, Auc: {self.auc:.4f}"
 
-        # Check if the file exists and load its content if it does
-        if os.path.exists(save_path):
-            with open(save_path, 'r') as file:
-                existing_data = json.load(file)
-        else:
-            existing_data = {}
-
-        # Append the new data
-        if key not in existing_data:
-            existing_data[key]={
-                "param":param,
-                "result":{}
-            }
-        existing_data[key]["result"][split_name]=res
-
-        # Save the updated data back to the file
-        with open(save_path, 'w') as file:
-            json.dump(existing_data, file, indent=4)
-            
-            
+# Example usage:
+# Assuming `pred` and `targ` are lists of integers from the model's outputs and true labels, respectively
+# metrics = Metrics(header="Evaluation", num_class=3)
+# metrics.update(pred, targ)
+# print(metrics)
