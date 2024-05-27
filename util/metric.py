@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn.metrics import accuracy_score, roc_auc_score
+from sklearn.metrics import accuracy_score, roc_auc_score,recall_score
 from collections import Counter
 import json,os
 def calculate_recall(labels, preds, class_id=None):
@@ -38,6 +38,7 @@ class Metrics:
     def reset(self):
         self.accuracy = 0
         self.auc = 0
+        self.recall_pos = 0
 
     def update(self, predictions, targets):
         # Update accuracy
@@ -62,14 +63,24 @@ class Metrics:
             except ValueError as e:
                 print(f"Failed to calculate AUC: {e}")
                 self.auc = None
+        
+        # Calculate recall_pos for all positive classes
+        if self.num_class == 2:
+            self.recall_pos = recall_score(targets, predictions, pos_label=1)
+        else:
+            binary_targets = (targets > 0).astype(int)
+            binary_predictions = (predictions > 0).astype(int)
+            self.recall_pos = recall_score(binary_targets, binary_predictions)
 
     def __str__(self):
-        return f"[{self.header}] Acc: {self.accuracy:.4f}, Auc: {self.auc:.4f}"
+        return f"[{self.header}] Acc: {self.accuracy:.4f}, Auc: {self.auc:.4f}, Recall_pos: {self.recall_pos:.4f}"
+
     def _store(self, param, save_path):
         # Prepare the result dictionary
         res = {
             "accuracy": round(self.accuracy, 4),
-            "auc": round(self.auc, 4)
+            "auc": round(self.auc, 4),
+            "recall_pos": round(self.recall_pos, 4)
         }
 
         # Check if the file exists and load its content if it does
