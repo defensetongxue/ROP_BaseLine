@@ -65,7 +65,29 @@ class Metrics:
 
     def __str__(self):
         return f"[{self.header}] Acc: {self.accuracy:.4f}, Auc: {self.auc:.4f}"
+    def _store(self, param, save_path):
+        # Prepare the result dictionary
+        res = {
+            "accuracy": round(self.accuracy, 4),
+            "auc": round(self.auc, 4)
+        }
 
+        # Check if the file exists and load its content if it does
+        if os.path.exists(save_path):
+            with open(save_path, 'r') as file:
+                existing_data = json.load(file)
+        else:
+            existing_data = []
+
+        # Append the new data
+        existing_data.append({
+            "result": res,
+            "param": param
+        })
+
+        # Save the updated data back to the file
+        with open(save_path, 'w') as file:
+            json.dump(existing_data, file, indent=4)
 # Example usage:
 # Assuming `pred` and `targ` are lists of integers from the model's outputs and true labels, respectively
 # metrics = Metrics(header="Evaluation", num_class=3)

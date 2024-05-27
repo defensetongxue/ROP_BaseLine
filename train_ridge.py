@@ -112,7 +112,6 @@ for epoch in range(last_epoch,total_epoches):
             print("Early stopping triggered")
             break
 
-
 # Load the best model and evaluate
 metirc=Metrics("Main",num_class=2)
 model.load_state_dict(
@@ -123,11 +122,8 @@ print(metirc)
 param={
     "model":args.configs["model"]["name"],
     "resolution": args.resize,
-    "norm_method":args.norm_method,
-    "smoothing":args.smoothing,
-    "optimizer":args.configs["lr_strategy"],
-    "weight_decay":args.configs["train"]["wd"],
-    "save_epoch":saved_epoch
+    "lr":args.lr,
+    "weight_decay":args.configs["train"]["wd"]
 }
-key=f"{args.configs['model']['name']}_{str(args.resize)}_{args.norm_method}_{str(args.smoothing)}_{str(args.configs['lr_strategy']['lr'])}_{str(args.configs['train']['wd'])}"
-metirc._store(key,args.split_name,param,save_path='./experiments/fs_ridge.json')
+
+metirc._store(param,save_path='./experiments/fs_ridge.json')
