@@ -1,1 +1,12 @@
-# ROP BaseLine
+# ROP Baseline
+[官中版](./说明.md)
+
+To compare our work (`ROP-Marker: an evidence-oriented AI assistant for ROP diagnosis`) with some commonly used industrial models, this repository mainly replicates these models. It primarily reuses some interfaces provided by Torch and the work from RetFound.
+
+If you need to use the RetFound work, you should first download the corresponding pre-trained models from [RetFound](https://github.com/rmaphoh/RETFound_MAE/tree/main) and place them in the appropriate location. You can modify the path of `model.pretrained` in `configs/default.json` to load the model you downloaded. For example, if the default path is `../ROP_diagnoise/pretrained/RETFound_cfp_weights.pth`, it indicates that the pre-trained model downloaded from RetFound will be loaded from this path. All Torch models are downloaded from the Torch official website and are stored in `experiments/hub` by default. `experiments` is a folder for storing intermediate results and will be automatically created in the execution directory at runtime. You can specify this by modifying the parameters in the config.
+
+The `plot` folder contains some plotting code, which is still being organized and does not affect the overall process. In actual use, I will modify based on some intermediate files, so these files do not currently support direct execution.
+
+`train_stage.py` and `test_stage.py` are responsible for the staging task (distinguishing whether it is positive and the specific stage, performing 4-class classification). The former trains on the same dataset, while the latter is used for cross-dataset testing. However, in practice, the consequences of confusing whether a sample is positive with mistaking the specific stage are different. Since staging has a certain subjectivity, sometimes mistaking the stage does not significantly affect treatment. This makes it difficult to fairly compare with our work (as it is hard to quantify the importance, e.g., it is difficult to determine the weights in the confusion matrix). Additionally, simultaneously distinguishing the stage and whether it is diseased can reduce the recall rate of positive samples (due to the subjectivity of the staging labels, simultaneous staging tasks may cause the model to overfit the staging parameters instead of focusing on distinguishing the disease). Therefore, our final comparison method is to first compare the ability to distinguish positive and negative samples for all data. Then, we sample a subset to compare the staging ability, referring to the comparison experiments listed in the supplementary materials of the paper.
+
+If you have any questions, feel free to raise them in the issue section.
