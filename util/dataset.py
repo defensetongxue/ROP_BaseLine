@@ -10,7 +10,7 @@ import torch
 IMAGENET_DEFAULT_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_DEFAULT_STD = (0.229, 0.224, 0.225)
 class CustomDataset(Dataset):
-    def __init__(self, split,data_path,split_name,resize=224,norm_method='custom',enhanced=False):
+    def __init__(self, split,data_path,split_name,resize=224,norm_method='custom',enhanced=False,bin=False):
         '''
         as the retfound model is pretrained in the image_net norm(mean,std),
         we keep the mean and std for this method, but for the other model, 
@@ -20,6 +20,7 @@ class CustomDataset(Dataset):
             self.split_list=json.load(f)[split]
         with open(os.path.join(data_path,'annotations.json'),'r') as f:
             self.data_dict=json.load(f)
+        
         self.preprocess=transforms.Compose([
             # CropPadding(),
             transforms.Resize((resize,resize))
@@ -46,7 +47,8 @@ class CustomDataset(Dataset):
                 mean=[0.4623, 0.3856, 0.2822],
                 std=[0.2527, 0.1889, 0.1334])])
         else:
-            raise 
+            raise
+        self.bin=bin 
     def __getitem__(self, idx):
         image_name = self.split_list[idx]
         data=self.data_dict[image_name]
@@ -59,10 +61,11 @@ class CustomDataset(Dataset):
             img=self.enhance_transforms(img)
             
         img=self.img_transforms(img)
-        ridge_label = 1 if data['stage']>0 else 0
-        ridge_label = data["stage"]
+        if self.bin:
+            ridge_label = 1 if data['stage']>0 else 0
+        else:
+            ridge_label = data["stage"]
         return img,ridge_label,image_name
-        return img,data['stage']>0,image_name
 
 
     def __len__(self):
